@@ -1,0 +1,38 @@
+name: "Daily Workday Reservation"
+ 
+on:
+  schedule:
+    - cron: "1 2 * * 2-6"
+  workflow_dispatch:
+ 
+jobs:
+  reserve:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+ 
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: "3.x"
+ 
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+ 
+      - name: Run reservation script
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          LOGIN_URL: ${{ secrets.LOGIN_URL }}
+          RESERVATION_URL: ${{ secrets.RESERVATION_URL }}
+          HOST: ${{ secrets.HOST }}
+          ORIGIN: ${{ secrets.ORIGIN }}
+          REFERER: ${{ secrets.REFERER }}
+          USER_ID: ${{ secrets.USER_ID }}
+          DESK_ID: ${{ secrets.DESK_ID }}
+        run: |
+          python res.py
