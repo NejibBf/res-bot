@@ -34,5 +34,6 @@ jobs:
           REFERER: ${{ secrets.REFERER }}
           USER_ID: ${{ secrets.USER_ID }}
           DESK_ID: ${{ secrets.DESK_ID }}
+          PERIOD: ${{ secrets.PERIOD }}
         run: |
           python res.py
