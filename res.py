@@ -98,7 +98,7 @@ def check_reservation(token, reservation_date):
     print(f"✅ Reservation status for {reservation_date} \n" + json.dumps(resp.json(), indent=4))
  
 def main():
-    span = os.environ["DAYS"]
+    span = os.environ["PERIOD"]
     today_utc = datetime.datetime.utcnow().date()
     target_date = today_utc + datetime.timedelta(days=int(span))
     reservation_date = target_date.isoformat()  # “YYYY-MM-DD”
