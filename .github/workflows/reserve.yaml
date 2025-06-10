@@ -35,5 +35,6 @@ jobs:
           USER_ID: ${{ secrets.USER_ID }}
           DESK_ID: ${{ secrets.DESK_ID }}
           PERIOD: ${{ secrets.PERIOD }}
+          CHECK_URL: ${{ secrets.CHECK_URL }}
         run: |
           python res.py
