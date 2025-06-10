@@ -98,9 +98,9 @@ def check_reservation(token, reservation_date):
     print(f"✅ Reservation status for {reservation_date} \n" + json.dumps(resp.json(), indent=4))
  
 def main():
-    # Calculate UTC “today” and add 14 days.
+    span = os.environ["DAYS"]
     today_utc = datetime.datetime.utcnow().date()
-    target_date = today_utc + datetime.timedelta(days=13)
+    target_date = today_utc + datetime.timedelta(days=int(span))
     reservation_date = target_date.isoformat()  # “YYYY-MM-DD”
  
     token = get_access_token()
