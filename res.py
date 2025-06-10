@@ -1,6 +1,7 @@
 import os
 import requests
 import datetime
+import json
  
 def get_access_token():
     """
@@ -68,6 +69,33 @@ def make_reservation(token, reservation_date):
     resp = requests.post(reservation_url, headers=headers, json=payload)
     resp.raise_for_status()
     print(f"✅ Reservation successful for {reservation_date} (status {resp.status_code})")
+
+def check_reservation(token, reservation_date):
+    """
+    Verify Reservation.
+    """
+    user_id = os.environ["USER_ID"]
+    check_url = os.environ["CHECK_URL"] + user_id + "/" + reservation_date + "/AM/desk" # Pull reservation URL from GitHub Secrets
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) ",
+        "Host": os.environ["HOST"],  # Pull Host URL from GitHub Secrets
+        "Origin": os.environ["ORIGIN"],  # Pull Origin URL from GitHub Secrets
+        "Referer": os.environ["REFERER"],  # Pull Referer URL from GitHub Secrets
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "0",
+        "sec-ch-ua": '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "x-access-token": token,  # Use the token returned from login
+        "Content-Type": "application/json"
+    }
+ 
+    resp = requests.get(check_url, headers=headers)
+    resp.raise_for_status()
+    print(f"✅ Reservation status for {reservation_date} \n" + json.dumps(resp.json(), indent=4))
  
 def main():
     # Calculate UTC “today” and add 14 days.
@@ -77,6 +105,7 @@ def main():
  
     token = get_access_token()
     make_reservation(token, reservation_date)
+    check_reservation(token, reservation_date)
  
 if __name__ == "__main__":
     main()
