@@ -2,7 +2,7 @@ name: "Daily Workday Reservation"
  
 on:
   schedule:
-    - cron: "0 22 * * 2-6"
+    - cron: "0 0 * * 2-6"
   workflow_dispatch:
  
 jobs:
