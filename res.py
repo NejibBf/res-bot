@@ -109,7 +109,7 @@ def main():
     paris = timezone('Europe/Paris')
     sa_time = datetime.datetime.now(paris)
     print ("Paris time:" + str(sa_time) )
-    print ("Server time:" + str(today_utc) )
+    print ("Server time:" + str(datetime.datetime.utcnow()) )
  
     make_reservation(token, reservation_date)
     check_reservation(token, reservation_date)
