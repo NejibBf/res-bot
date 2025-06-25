@@ -2,6 +2,7 @@ import os
 import requests
 import datetime
 import json
+from pytz import timezone    
  
 def get_access_token():
     """
@@ -104,6 +105,11 @@ def main():
     reservation_date = target_date.isoformat()  # “YYYY-MM-DD”
  
     token = get_access_token()
+    
+    paris = timezone('Europe/Paris')
+    sa_time = datetime.datetime.now(paris)
+    print ("Paris time:" + sa_time)
+ 
     make_reservation(token, reservation_date)
     check_reservation(token, reservation_date)
  
